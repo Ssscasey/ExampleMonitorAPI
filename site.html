@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor List</title>
+</head>
+<body>
+    <h1>Monitor List</h1>
+    <button onclick="fetchMonitors()">Get Monitors</button>
+    <div id="monitorList"></div>
+
+    <script>
+        function fetchMonitors() {
+            fetch('/category/monitors')
+                .then(response => response.json())
+                .then(data => displayMonitors(data.monitors))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function displayMonitors(monitors) {
+            const monitorListDiv = document.getElementById('monitorList');
+            monitorListDiv.innerHTML = '<h2>Monitors:</h2>';
+            const ul = document.createElement('ul');
+
+            monitors.forEach(monitor => {
+                const li = document.createElement('li');
+                li.textContent = `${monitor[0]} - ${monitor[1]}`;
+                ul.appendChild(li);
+            });
+
+            monitorListDiv.appendChild(ul);
+        }
+    </script>
+</body>
+</html>
+
